@@ -7,7 +7,7 @@ using namespace std;
 int n;
 int lSender, rSender;
 int lRecver, rRecver;
-int frame[20], ack[20];
+int frame[65], ack[65];
 
 void *chk(void *args) {
     int id = (*(int *)args);
@@ -22,7 +22,7 @@ void *send(void *args) {
         if (lSender <= rRecver) {
             cout << "Sending frame: " << lSender << "\n";
             frame[lSender] = 1;
-            usleep(2000000);
+            usleep(1000000);
             int i = lSender;
             pthread_create(&chkAck, NULL, chk, (void *)&i);
             lSender++;
@@ -49,7 +49,7 @@ void *recv(void *args) {
 }
 
 int main() {
-    int totFrames = 16;
+    int totFrames = 24;
     int block = 4;
     lSender = lRecver = 1;
     rSender = rRecver = 4;

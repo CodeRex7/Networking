@@ -31,15 +31,7 @@ int main() {
     pthread_t sendThread, receiveThread;
     for (int i = 1; i <= totFrames; i++) {
         int sendOk = pthread_create(&sendThread, NULL, send, (void *)&i);
-        if (sendOk) {
-            cout << "Error while sending frame: " << i << "\n";
-            exit(0);
-        }
         int receiveOk = pthread_create(&receiveThread, NULL, receive, (void *)&i);
-        if (receiveOk) {
-            cout << "Error while receiving frame: " << i << "\n";
-            exit(0);
-        }
         pthread_join(sendThread, NULL);
         pthread_join(receiveThread, NULL);
     }

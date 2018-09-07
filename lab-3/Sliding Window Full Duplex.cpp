@@ -59,6 +59,7 @@ void *recvS(void *args) {
     while (1) {
         if (lRecverS <= rRecverS) {
             cout << "Sender 2 sent frame: " << lRecverS << "\n";
+            frameRecver[lRecverS] = 1;
             usleep(5000000);
             int i = lRecverS;
             pthread_create(&chkAck, NULL, chkRecver, (void *)&i);

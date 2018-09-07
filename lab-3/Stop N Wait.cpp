@@ -1,6 +1,7 @@
 #include <iostream>
 #include <pthread.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ void *send(void *args) {
 void *receive(void *args) {
     int id = (*(int *)args);
     while (!frame[id]);
-    // if (id == 2) usleep(5000000);
+    if (id == 2) usleep(5000000);
     cout << "Acknowledged frame: " << id << "\n";
     ack[id] = 1;
     pthread_exit(NULL);

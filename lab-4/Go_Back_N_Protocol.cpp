@@ -2,6 +2,7 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <queue>
+#include <algorithm>
 
 using namespace std;
 
@@ -37,8 +38,10 @@ void *recv(void *args) {
     int processdFrames = 0;
 
     while (1) {
-        if (!frames.empty()) cout << "Received frame number:\t" << frames.front() << "\n";
-        processdFrames++;
+        if (!frames.empty()) {
+            cout << "Received frame number:\t" << frames.front() << "\n";
+            processdFrames++;
+        }
 
         if (!frames.empty() and error[frames.front()]) {
             cout << "Erroneous frame number:\t" << frames.front() << "\n";
@@ -46,7 +49,7 @@ void *recv(void *args) {
             NACK = frames.front();
             while (NACK != -1);
             error[frames.front()] = 0;
-            continue;
+            continue ;
         }
 
         if (!frames.empty()) frames.pop();
@@ -66,7 +69,11 @@ int main() {
     cout << "Enter number of frames to send: ";
     cin >> numFrames;
 
-    error[5] = error[8] = error[13] = error[19] = 1;
+    int n = rand() % min(5, numFrames);
+    for (int i = 0; i < n; i++) {
+        int x = rand() % numFrames;
+        error[x] = 1;
+    }
     
     pthread_t sendThread, recvThread;
 

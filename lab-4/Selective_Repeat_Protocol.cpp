@@ -46,12 +46,12 @@ void *recv(void *args) {
             NACK = frames[0];
             frames.erase(frames.begin());
             while (NACK != -1);
+            sort(frames.begin(), frames.end());
             error[frames[0]] = 0;
             continue ;
         }
 
         if (!frames.empty()) {
-            sort(frames.begin(), frames.end());
             frames.erase(frames.begin());
         }
         
@@ -69,8 +69,12 @@ int main() {
     int numFrames;
     cout << "Enter number of frames to send: ";
     cin >> numFrames;
-
-    error[5] = error[8] = error[13] = error[19] = 1;
+    
+    int n = rand() % min(5, numFrames);
+    for (int i = 0; i < n; i++) {
+        int x = rand() % numFrames;
+        error[x] = 1;
+    }
 
     pthread_t sendThread, recvThread;
 

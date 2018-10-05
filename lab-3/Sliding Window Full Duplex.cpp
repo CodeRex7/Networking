@@ -76,7 +76,7 @@ void *recvR(void *args) {
             while (!frameSender[lRecverR]);
             cout << "Sender 2 acknowledged frame: " << lRecverR << "\n";
             ackSender[lRecverR] = 1;
-            usleep(2000000);
+            usleep(6000000);
             lRecverR++;
             if (rSenderS != n) rSenderS++;
         }
